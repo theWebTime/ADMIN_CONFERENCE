@@ -91,6 +91,7 @@ export default {
         formData.append("files[" + i + "]", file);
       }
       formData.append("conference_id", this.conference_id);
+      formData.append("date", this.insertData.date);
       this.loader = true;
       http
         .post("conference-schedule/store", formData)
