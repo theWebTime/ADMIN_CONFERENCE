@@ -2,7 +2,7 @@
   <div>
     <GlobalBreadCrumbsVue></GlobalBreadCrumbsVue>
 
-    <VCard title="Update Data of this Conference Tag">
+    <VCard title="Update Data of this Conference Type">
       <VAlert
         v-model="isAlertVisible"
         closable
@@ -80,9 +80,9 @@ export default {
       insertData: {
         title: "",
         status: "",
-        conference_tag_id: this.$route.params.id,
+        conference_type_id: this.$route.params.id,
       },
-      conference_tag_id: this.$route.params.id,
+      conference_type_id: this.$route.params.id,
       loader: false,
       errors: {},
       isAlertVisible: false,
@@ -95,8 +95,8 @@ export default {
     async fetchData() {
       this.loader = true;
       await http
-        .post("/conference-tag/show", {
-          conference_tag_id: this.conference_tag_id,
+        .post("/conference-type/show", {
+          conference_type_id: this.conference_type_id,
         })
         .then((res) => {
           if (res.data.success) {
@@ -115,13 +115,13 @@ export default {
       if (checkValidation.valid) {
         this.loader = true;
         http
-          .post("conference-tag/update", this.insertData)
+          .post("conference-type/update", this.insertData)
           .then((res) => {
             if (res.data.success) {
               this.fetchData();
               this.$toast.success(res.data.message);
               this.$router.push({
-                path: "/conferenceTag/list/",
+                path: "/conferenceType/list/",
               });
               this.isAlertVisible = false;
             } else {

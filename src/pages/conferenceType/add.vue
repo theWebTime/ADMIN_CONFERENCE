@@ -1,8 +1,7 @@
 <template>
   <div>
     <GlobalBreadCrumbsVue></GlobalBreadCrumbsVue>
-
-    <VCard title="Update Data of this Conference Tag">
+    <VCard title="Add Conference Type">
       <VAlert
         v-model="isAlertVisible"
         closable
@@ -24,17 +23,10 @@
                 label="Title"
               />
             </VCol>
-            <VCol cols="12" md="6">
-              <VRadioGroup v-model="insertData.status" inline label="Status">
-                <VRadio label="Active" :value="1" density="compact" />
-                <VRadio label="In-Active" :value="0" density="compact" />
-              </VRadioGroup>
-            </VCol>
           </VRow>
         </VCardText>
-
         <VCardText class="d-flex justify-end flex-wrap gap-3">
-          <VBtn @click="updateData"> Update </VBtn>
+          <VBtn @click="saveData"> Save </VBtn>
         </VCardText>
       </VForm>
     </VCard>
@@ -49,7 +41,6 @@
     </VDialog>
   </div>
 </template>
-
 <script>
 import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
 import http from "../../http-common";
@@ -79,50 +70,25 @@ export default {
       ],
       insertData: {
         title: "",
-        status: "",
-        conference_tag_id: this.$route.params.id,
       },
-      conference_tag_id: this.$route.params.id,
       loader: false,
       errors: {},
       isAlertVisible: false,
     };
   },
-  created() {
-    this.fetchData();
-  },
   methods: {
-    async fetchData() {
-      this.loader = true;
-      await http
-        .post("/conference-tag/show", {
-          conference_tag_id: this.conference_tag_id,
-        })
-        .then((res) => {
-          if (res.data.success) {
-            const resData = res.data.data;
-            this.insertData.title = resData.title;
-            this.insertData.status = resData.status;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-      this.loader = false;
-    },
-    async updateData() {
+    async saveData() {
       const checkValidation = await this.$refs.formSubmit.validate();
       if (checkValidation.valid) {
         this.loader = true;
         http
-          .post("conference-tag/update", this.insertData)
+          .post("/conference-type/store", this.insertData)
           .then((res) => {
             if (res.data.success) {
-              this.fetchData();
-              this.$toast.success(res.data.message);
               this.$router.push({
-                path: "/conferenceTag/list/",
+                path: "/conferenceType/list/",
               });
+              this.$toast.success(res.data.message);
               this.isAlertVisible = false;
             } else {
               this.$toast.error(res.data.message);
@@ -133,6 +99,7 @@ export default {
           })
           .catch((e) => {
             this.loader = false;
+            console.log(e);
           });
       }
     },
