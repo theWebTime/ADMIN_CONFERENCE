@@ -19,7 +19,7 @@
           <VRow>
             <VCol cols="12" md="6">
               <AppTextField
-                :rules="[globalRequire, nameMin].flat()"
+                :rules="[globalRequire, nameMin, nameMax].flat()"
                 v-model="insertData.name"
                 label="Name"
               />
@@ -36,19 +36,6 @@
                 <VRadio label="Active" :value="1" density="compact" />
                 <VRadio label="In-Active" :value="0" density="compact" />
               </VRadioGroup>
-            </VCol>
-            <VCol cols="12" md="4">
-              <v-file-input
-                accept="image/*"
-                v-model="image"
-                label="Image"
-                ref="file"
-              ></v-file-input>
-            </VCol>
-            <VCol cols="12" md="4">
-              <VAvatar size="48">
-                <VImg :src="fetch_photo" />
-              </VAvatar>
             </VCol>
           </VRow>
         </VCardText>
@@ -87,6 +74,12 @@ export default {
       ],
       nameMin: [
         (value) => {
+          if (value?.length <= 50) return true;
+          return "Must be at least 50 characters.";
+        },
+      ],
+      nameMax: [
+        (value) => {
           if (value?.length >= 3) return true;
           return "Must be at least 3 characters.";
         },
@@ -97,15 +90,14 @@ export default {
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "Email must be valid",
       ],
-      image: "",
-      fetch_photo: "",
       insertData: {
         name: "",
         email: "",
         status: "",
+        user_id: this.$route.params.id,
       },
       loader: false,
-      paramsId: this.$route.params.id,
+      id: this.$route.params.id,
       errors: {},
       isAlertVisible: false,
     };
@@ -117,14 +109,13 @@ export default {
     async fetchData() {
       this.loader = true;
       await http
-        .get("/user-management/show/" + this.paramsId)
+        .post("/user-management/show", { id: this.id })
         .then((res) => {
           if (res.data.success) {
             const resData = res.data.data;
             this.insertData.name = resData.name;
             this.insertData.email = resData.email;
             this.insertData.status = resData.status;
-            this.fetch_photo = resData.image;
           }
         })
         .catch((e) => {
@@ -135,19 +126,9 @@ export default {
     async updateData() {
       const checkValidation = await this.$refs.formSubmit.validate();
       if (checkValidation.valid) {
-        const formData = new FormData();
-        if (this.image) {
-          const imageData = this.$refs.file.files[0];
-          formData.append("image", imageData);
-        } else {
-          formData.append("image", "");
-        }
-        for (let x in this.insertData) {
-          formData.append(x, this.insertData[x]);
-        }
         this.loader = true;
         http
-          .post("user-management/update/" + this.paramsId, formData)
+          .post("user-management/update", this.insertData)
           .then((res) => {
             if (res.data.success) {
               this.fetchData();

@@ -1,6 +1,3 @@
-import router from "@/router";
-import ls from "localstorage-slim";
-
 const auth = ls.get("user-info", { decrypt: true });
 if (!auth) {
   router.push("/");

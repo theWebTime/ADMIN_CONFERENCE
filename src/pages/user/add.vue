@@ -18,13 +18,13 @@
           <VRow>
             <VCol cols="12" md="6">
               <VRadioGroup v-model="insertData.role" inline label="Status">
-                <VRadio label="School Owner" :value="2" density="compact" />
-                <VRadio label="User" :value="3" density="compact" />
+                <VRadio label="Admin" :value="1" density="compact" />
+                <VRadio label="Conference Owner" :value="2" density="compact" />
               </VRadioGroup>
             </VCol>
             <VCol cols="12" md="6">
               <AppTextField
-                :rules="[globalRequire, nameMin].flat()"
+                :rules="[globalRequire, nameMin, nameMax].flat()"
                 v-model="insertData.name"
                 label="Name"
               />
@@ -43,14 +43,6 @@
                 v-model="insertData.password"
                 :rules="[globalRequire, passwordMin].flat()"
               ></AppTextField>
-            </VCol>
-            <VCol cols="12" md="6">
-              <v-file-input
-                accept="image/*"
-                v-model="image"
-                label="Image"
-                ref="file"
-              ></v-file-input>
             </VCol>
           </VRow>
         </VCardText>
@@ -87,6 +79,12 @@ export default {
       ],
       nameMin: [
         (value) => {
+          if (value?.length <= 50) return true;
+          return "Must be at least 50 characters.";
+        },
+      ],
+      nameMax: [
+        (value) => {
           if (value?.length >= 3) return true;
           return "Must be at least 3 characters.";
         },
@@ -103,7 +101,6 @@ export default {
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "Email must be valid",
       ],
-      image: "",
       insertData: {
         role: "",
         name: "",
@@ -119,19 +116,9 @@ export default {
     async saveData() {
       const checkValidation = await this.$refs.formSubmit.validate();
       if (checkValidation.valid) {
-        const formData = new FormData();
-        if (this.image) {
-          const imageData = this.$refs.file.files[0];
-          formData.append("image", imageData);
-        } else {
-          formData.append("image", "");
-        }
-        for (let x in this.insertData) {
-          formData.append(x, this.insertData[x]);
-        }
         this.loader = true;
         http
-          .post("/user-management/store", formData)
+          .post("/user-management/store", this.insertData)
           .then((res) => {
             if (res.data.success) {
               this.$router.push({

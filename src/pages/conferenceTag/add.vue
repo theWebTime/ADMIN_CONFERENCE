@@ -1,7 +1,7 @@
 <template>
   <div>
     <GlobalBreadCrumbsVue></GlobalBreadCrumbsVue>
-    <VCard title="Add School Plan">
+    <VCard title="Add Conference Tag">
       <VAlert
         v-model="isAlertVisible"
         closable
@@ -16,40 +16,11 @@
       <VForm ref="formSubmit">
         <VCardText>
           <VRow>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
-                :rules="[globalRequire, nameMin].flat()"
+                :rules="[globalRequire, nameMin, nameMax].flat()"
                 v-model="insertData.title"
                 label="Title"
-              />
-            </VCol>
-            <VCol cols="12" md="4">
-              <AppTextField
-                v-model="insertData.amount"
-                type="number"
-                :rules="[globalRequire].flat()"
-                label="Amount"
-              />
-            </VCol>
-            <VCol cols="12" md="4">
-              <AppTextField
-                v-model="insertData.total_days"
-                :rules="[globalRequire].flat()"
-                type="number"
-                label="Total Days"
-              />
-            </VCol>
-            <VCol cols="12" md="6">
-              <v-textarea
-                v-model="insertData.terms_and_condition"
-                :rules="[globalRequire].flat()"
-                label="Terms and Conditions"
-              /> </VCol
-            ><VCol cols="12" md="6">
-              <v-textarea
-                v-model="insertData.description"
-                :rules="[globalRequire].flat()"
-                label="Description"
               />
             </VCol>
           </VRow>
@@ -72,7 +43,7 @@
 </template>
 <script>
 import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
-import http from "../../../http-common";
+import http from "../../http-common";
 export default {
   components: {
     GlobalBreadCrumbsVue,
@@ -87,19 +58,20 @@ export default {
       ],
       nameMin: [
         (value) => {
+          if (value?.length <= 50) return true;
+          return "Must be at least 50 characters.";
+        },
+      ],
+      nameMax: [
+        (value) => {
           if (value?.length >= 3) return true;
           return "Must be at least 3 characters.";
         },
       ],
       insertData: {
         title: "",
-        amount: "",
-        total_days: "",
-        terms_and_condition: "",
-        description: "",
       },
       loader: false,
-      paramsId: this.$route.params.id,
       errors: {},
       isAlertVisible: false,
     };
@@ -110,11 +82,11 @@ export default {
       if (checkValidation.valid) {
         this.loader = true;
         http
-          .post("/school-plan/store/" + this.paramsId, this.insertData)
+          .post("/conference-tag/store", this.insertData)
           .then((res) => {
             if (res.data.success) {
               this.$router.push({
-                path: "/schoolManagement/list/",
+                path: "/conferenceTag/list/",
               });
               this.$toast.success(res.data.message);
               this.isAlertVisible = false;

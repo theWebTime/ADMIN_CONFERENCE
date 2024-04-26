@@ -54,7 +54,7 @@
                 {{ (data.current_page - 1) * data.per_page + index + 1 }}
               </td>
               <td class="text-center">
-                {{ item.role == 2 ? "School Owner" : "User" }}
+                {{ item.role == 1 ? "Admin" : "Conference Owner" }}
               </td>
               <td class="text-center">
                 {{ item.name }}

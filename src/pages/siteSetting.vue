@@ -36,7 +36,7 @@
             <VCol cols="12" md="4">
               <AppTextField
                 v-model="insertData.email1"
-                :rules="[email].flat()"
+                :rules="[email, globalRequire].flat()"
                 label="Email"
               />
             </VCol>
@@ -49,23 +49,33 @@
             </VCol>
             <VCol cols="12" md="4">
               <AppTextField
+                v-model="insertData.whatsapp_number"
+                type="number"
+                :rules="[numberMin, numberMax].flat()"
+                label="Whatsapp Number"
+              />
+            </VCol>
+            <VCol cols="12" md="6">
+              <AppTextField
                 v-model="insertData.phone_number1"
+                :rules="[globalRequire, numberMin, numberMax].flat()"
                 type="number"
                 label="Phone Number"
               />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
                 v-model="insertData.phone_number2"
                 type="number"
-                label="Mobile Number"
+                :rules="[numberMin, numberMax].flat()"
+                label="Second Phone Number"
               />
             </VCol>
-            <VCol cols="12" md="4">
-              <AppTextField
-                v-model="insertData.address"
-                label="Street Address"
-              />
+            <VCol cols="12" md="6">
+              <v-textarea v-model="insertData.address" label="Street Address" />
+            </VCol>
+            <VCol cols="12" md="6">
+              <v-textarea v-model="insertData.iframe" label="Iframe" />
             </VCol>
             <VCol cols="12" md="4">
               <AppTextField
@@ -94,24 +104,12 @@
                 label="Youtube Link"
               />
             </VCol>
+
             <VCol cols="12" md="4">
               <AppTextField
-                v-model="insertData.whatsapp_number"
-                type="number"
-                label="Whatsapp Number"
+                v-model="insertData.video_link"
+                label="Video Link"
               />
-            </VCol>
-            <VCol cols="12" md="4">
-              <AppTextField
-                v-model="insertData.platform_fee"
-                label="Platform Fee"
-              />
-            </VCol>
-            <VCol cols="12" md="6">
-              <v-textarea v-model="insertData.iframe" label="Iframe" />
-            </VCol>
-            <VCol cols="12" md="6">
-              <v-textarea v-model="insertData.video_link" label="Video Link" />
             </VCol>
           </VRow>
         </VCardText>
@@ -153,6 +151,18 @@ export default {
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "Email must be valid",
       ],
+      numberMin: [
+        (value) => {
+          if (value?.length >= 10) return true;
+          return "Must be at least 10 characters.";
+        },
+      ],
+      numberMax: [
+        (value) => {
+          if (value?.length <= 10) return true;
+          return "Must be at least 10 characters.";
+        },
+      ],
       logo: "",
       fetch_photo: "",
       insertData: {
@@ -167,7 +177,6 @@ export default {
         linkedin_link: "",
         youtube_link: "",
         whatsapp_number: "",
-        platform_fee: "",
         iframe: "",
         video_link: "",
       },
@@ -184,7 +193,7 @@ export default {
     fetchData() {
       this.loader = true;
       http
-        .get("/site-setting-show")
+        .get("/user-side/site-setting-show")
         .then((res) => {
           if (res.data.success) {
             this.insertData.email1 = res.data.data.email1;
@@ -198,7 +207,6 @@ export default {
             this.insertData.linkedin_link = res.data.data.linkedin_link;
             this.insertData.youtube_link = res.data.data.youtube_link;
             this.insertData.whatsapp_number = res.data.data.whatsapp_number;
-            this.insertData.platform_fee = res.data.data.platform_fee;
             this.insertData.iframe = res.data.data.iframe;
             this.insertData.video_link = res.data.data.video_link;
             this.fetch_photo = res.data.data.logo;
