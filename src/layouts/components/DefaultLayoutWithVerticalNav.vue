@@ -43,12 +43,6 @@ export default {
         <VSpacer />
 
         <NavbarThemeSwitcher />
-        <RouterLink to="/chat" v-if="userData.role == 1">
-          <IconBtn>
-            <VIcon class="text-primary" :icon="'tabler-message'" />
-            <VTooltip activator="parent" location="bottom"> Chat </VTooltip>
-          </IconBtn>
-        </RouterLink>
         <UserProfile />
       </div>
     </template>

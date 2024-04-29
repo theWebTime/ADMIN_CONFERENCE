@@ -32,15 +32,17 @@
             Please sign-in to your account and start the adventure
           </p>
         </VCardText>
-
-        <VCardText v-if="isError">
-          <VAlert color="error" variant="tonal">
-            <h3></h3>
-            <p class="text-caption mb-2">
-              <strong>You are not authenticated</strong>
-            </p>
-          </VAlert>
-        </VCardText>
+        <VAlert
+          v-model="isAlertVisible"
+          closable
+          close-label="Close Alert"
+          color="error"
+        >
+          <ul v-for="(value, key) in errors" :key="key">
+            <li v-for="(value1, key1) in value" :key="key1">-> {{ value1 }}</li>
+          </ul>
+          {{ value }}
+        </VAlert>
 
         <VCardText>
           <VForm ref="formSubmit">
@@ -119,8 +121,10 @@ const isPasswordVisible = ref(false);
 const rememberMe = ref(false);
 </script>
 <script>
+import { useToast } from "vue-toastification";
 import ls from "localstorage-slim";
 import http from "../http-common";
+const toast = useToast();
 export default {
   name: "login",
   data() {
@@ -141,18 +145,15 @@ export default {
         email: "",
         password: "",
       },
-      isError: false,
       isSubmit: false,
+      errors: {},
+      isAlertVisible: false,
     };
   },
   methods: {
     async login() {
       const checkValidation = await this.$refs.formSubmit.validate();
       if (checkValidation.valid) {
-        if (this.loginObject.email == "" || this.loginObject.password == "") {
-          this.isError = true;
-          return false;
-        }
         this.isSubmit = true;
         http
           .post("/login", this.loginObject)
@@ -163,13 +164,17 @@ export default {
               location.reload();
               // this.$router.push({ name: "dashboard" });
             } else {
-              this.isError = true;
+              toast.error(res.data.message);
+              console.log(res.data.data);
+              if (res.data.data) {
+                this.errors = res.data.data;
+                this.isAlertVisible = true;
+              }
             }
             this.isSubmit = false;
           })
           .catch((e) => {
             console.log(e);
-            this.isError = true;
           });
       }
     },

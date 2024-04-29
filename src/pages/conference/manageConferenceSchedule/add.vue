@@ -85,33 +85,36 @@ export default {
   },
   methods: {
     async saveData() {
-      const formData = new FormData();
-      for (var i = 0; i < this.$refs.file.files.length; i++) {
-        let file = this.$refs.file.files[i];
-        formData.append("files[" + i + "]", file);
+      const checkValidation = await this.$refs.formSubmit.validate();
+      if (checkValidation.valid) {
+        const formData = new FormData();
+        for (var i = 0; i < this.$refs.file.files.length; i++) {
+          let file = this.$refs.file.files[i];
+          formData.append("files[" + i + "]", file);
+        }
+        formData.append("conference_id", this.conference_id);
+        formData.append("date", this.insertData.date);
+        this.loader = true;
+        http
+          .post("conference-schedule/store", formData)
+          .then((res) => {
+            if (res.data.success) {
+              this.$router.push({
+                path: "/conference/list/",
+              });
+              this.$toast.success(res.data.message);
+              this.isAlertVisible = false;
+            } else {
+              this.$toast.error(res.data.message);
+              this.errors = res.data.data;
+              this.isAlertVisible = true;
+            }
+            this.loader = false;
+          })
+          .catch((e) => {
+            this.loader = false;
+          });
       }
-      formData.append("conference_id", this.conference_id);
-      formData.append("date", this.insertData.date);
-      this.loader = true;
-      http
-        .post("conference-schedule/store", formData)
-        .then((res) => {
-          if (res.data.success) {
-            this.$router.push({
-              path: "/conference/list/",
-            });
-            this.$toast.success(res.data.message);
-            this.isAlertVisible = false;
-          } else {
-            this.$toast.error(res.data.message);
-            this.errors = res.data.data;
-            this.isAlertVisible = true;
-          }
-          this.loader = false;
-        })
-        .catch((e) => {
-          this.loader = false;
-        });
     },
   },
 };
