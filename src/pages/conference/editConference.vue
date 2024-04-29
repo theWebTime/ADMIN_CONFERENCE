@@ -31,16 +31,6 @@
               </VAvatar>
             </VCol>
             <VCol cols="12" md="4">
-              <AppSelect
-                v-model="insertData.user_id"
-                :items="data_fetch_user"
-                :rules="[globalRequire].flat()"
-                item-title="name"
-                item-value="id"
-                label="User"
-              />
-            </VCol>
-            <VCol cols="12" md="4">
               <AppTextField
                 v-model="insertData.domain"
                 :rules="[globalRequire, nameMin, nameMax].flat()"
@@ -256,7 +246,6 @@ export default {
       conference_id: this.$route.params.id,
       fetchingState: "",
       fetchingCity: "",
-      data_fetch_user: "",
       data_fetch_conference_tag: "",
       data_fetch_conference_type: "",
       data_fetch_countries: "",
@@ -272,7 +261,6 @@ export default {
   },
   created() {
     this.fetchData();
-    this.fetch_user();
     this.fetch_conference_tag();
     this.fetch_conference_type();
     this.fetch_countries();
@@ -295,18 +283,6 @@ export default {
     },
   },
   methods: {
-    fetch_user() {
-      http
-        .get("/user-side/user-listing")
-        .then((res) => {
-          if (res.data.success) {
-            this.data_fetch_user = res.data.data;
-          }
-        })
-        .catch((e) => {
-          this.$toast.error("Something went wrong");
-        });
-    },
     fetch_conference_tag() {
       http
         .get("/user-side/conference-tag-listing")

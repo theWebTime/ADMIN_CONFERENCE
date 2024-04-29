@@ -20,15 +20,11 @@
         <VSpacer />
 
         <div class="app-user-search-filter d-flex align-center flex-wrap gap-4">
-          <!-- 👉 Search  -->
-          <div style="inline-size: 10rem">
-            <AppTextField
-              v-model="options.search"
-              placeholder="Search"
-              density="compact"
-              @keyup="fetchData()"
-            />
-          </div>
+          <router-link
+            :to="'/conference/manageConferenceTestimonial/add/' + this.paramsId"
+          >
+            <VBtn prepend-icon="tabler-plus"> Add Conference Testimonial </VBtn>
+          </router-link>
         </div>
       </VCardText>
       <VDivider />
@@ -37,10 +33,10 @@
           <thead>
             <tr>
               <th class="text-uppercase">ID.</th>
-              <th class="text-uppercase text-center">Role</th>
+              <th class="text-uppercase text-center">Image</th>
               <th class="text-uppercase text-center">Name</th>
-              <th class="text-uppercase text-center">Email</th>
-              <th class="text-uppercase text-center">Status</th>
+              <th class="text-uppercase text-center">Designation</th>
+              <th class="text-uppercase text-center">Review</th>
               <th class="text-uppercase text-center">Action</th>
             </tr>
           </thead>
@@ -51,28 +47,20 @@
                 {{ (data.current_page - 1) * data.per_page + index + 1 }}
               </td>
               <td class="text-center">
-                {{ item.role == 1 ? "Admin" : "Conference Owner" }}
+                <VAvatar size="48">
+                  <VImg :src="item.image" />
+                </VAvatar>
               </td>
               <td class="text-center">
                 {{ item.name }}
               </td>
               <td class="text-center">
-                {{ item.email }}
+                {{ item.designation }}
               </td>
               <td class="text-center">
-                {{ item.status == 1 ? "Active" : "In-Active" }}
+                {{ item.review }}
               </td>
               <td class="text-center">
-                <router-link :to="'/user/editUser/' + item.id">
-                  <IconBtn>
-                    <VIcon :icon="'tabler-edit-circle'" />
-
-                    <VTooltip activator="parent" location="start">
-                      Edit Data
-                    </VTooltip>
-                  </IconBtn>
-                </router-link>
-                <!-- |
                 <IconBtn>
                   <VIcon
                     class="text-primary"
@@ -82,7 +70,7 @@
                   <VTooltip activator="parent" location="start">
                     Delete Data
                   </VTooltip>
-                </IconBtn> -->
+                </IconBtn>
               </td>
             </tr>
           </tbody>
@@ -124,7 +112,7 @@
 import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
 import { VDataTable } from "vuetify/labs/VDataTable";
 import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
-import http from "../../http-common";
+import http from "../../../http-common";
 export default {
   components: {
     GlobalBreadCrumbsVue,
@@ -150,6 +138,8 @@ export default {
       rules: {
         required: (value) => !!value || "Required.",
       },
+      paramsId: this.$route.params.id,
+      id: this.$route.params.id,
       editableId: null,
       errors: {},
       isAlertVisible: false,
@@ -166,8 +156,10 @@ export default {
     fetchData() {
       this.loader = true;
       http
-        .get(
-          "/user-management/index?page=" +
+        .post(
+          "/conference-testimonial/index",
+          { id: this.id },
+          +"?page=" +
             this.options.page +
             "&itemsPerPage=" +
             this.options.itemsPerPage +
@@ -205,7 +197,9 @@ export default {
 
     deleteData() {
       http
-        .post("/user-management/delete/" + this.editableId, {})
+        .post("/conference-testimonial/delete", {
+          conference_id: this.editableId,
+        })
         .then((res) => {
           if (res.data.success) {
             this.fetchData();

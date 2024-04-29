@@ -82,10 +82,6 @@ if (auth.role == 1) {
     icon: { icon: "tabler-user" },
     children: [
       {
-        title: "Add",
-        to: { name: "user-add" },
-      },
-      {
         title: "List",
         to: { name: "user-list" },
       },

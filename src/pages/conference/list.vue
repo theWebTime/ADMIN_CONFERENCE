@@ -72,7 +72,7 @@
                   :to="'/conference/manageConferenceSchedule/list/' + item.id"
                 >
                   <IconBtn>
-                    <VIcon :icon="'tabler-brand-google-photos'" />
+                    <VIcon :icon="'tabler-list-details'" />
 
                     <VTooltip activator="parent" location="start">
                       Edit Conference Schedule
@@ -80,6 +80,134 @@
                   </IconBtn>
                 </router-link>
                 |
+                <router-link
+                  :to="'/conference/manageConferenceGallery/list/' + item.id"
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-brand-google-photos'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Gallery
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="
+                    '/conference/manageConferenceTestimonial/list/' + item.id
+                  "
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-letter-t-small'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Testimonial
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="
+                    '/conference/manageConferenceMediaPartner/list/' + item.id
+                  "
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-camera'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Testimonial
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="'/conference/manageConferenceProgram/list/' + item.id"
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-progress'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Program
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="'/conference/manageConferenceSpeaker/list/' + item.id"
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-speakerphone'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Speaker
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="
+                    '/conference/manageConferenceCommitteeMember/list/' +
+                    item.id
+                  "
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-users-group'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Committee Member
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="
+                    '/conference/manageConferenceImportantDate/list/' + item.id
+                  "
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-calendar'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Important Date
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="'/conference/mangeConferenceFaq/list/' + item.id"
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-question-mark'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference FAQ
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="'/conference/mangeConferenceOtherInformation/' + item.id"
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-info-circle'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Other Information
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
+                  :to="'/conference/manageConferencePlan/list/' + item.id"
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-timeline'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Conference Plan
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
               </td>
             </tr>
           </tbody>

@@ -25,16 +25,6 @@
               ></v-file-input>
             </VCol>
             <VCol cols="12" md="4">
-              <AppSelect
-                v-model="insertData.user_id"
-                :items="data_fetch_user"
-                :rules="[globalRequire].flat()"
-                item-title="name"
-                item-value="id"
-                label="User"
-              />
-            </VCol>
-            <VCol cols="12" md="4">
               <AppTextField
                 v-model="insertData.domain"
                 :rules="[globalRequire, nameMin, nameMax].flat()"
@@ -94,6 +84,14 @@
                 v-model="insertData.email"
                 :rules="[email, globalRequire].flat()"
                 label="Email"
+              />
+            </VCol>
+            <VCol cols="12" md="4">
+              <AppTextField
+                type="password"
+                :rules="[passwordMin].flat()"
+                v-model="insertData.password"
+                label="Password"
               />
             </VCol>
             <VCol cols="12" md="6">
@@ -161,7 +159,6 @@
         </VCardText>
       </VForm>
     </VCard>
-    <!-- global loader modal -->
     <VDialog v-model="loader" width="300">
       <VCard color="primary" width="300">
         <VCardText class="pt-3">
@@ -173,7 +170,8 @@
   </div>
 </template>
 <script>
-import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vun";
+import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
+import http from "../../http-common";
 export default {
   components: {
     GlobalBreadCrumbsVue,
@@ -184,6 +182,12 @@ export default {
         (value) => {
           if (value) return true;
           return "Required.";
+        },
+      ],
+      passwordMin: [
+        (value) => {
+          if (value?.length > 6) return true;
+          return "Must be at least 6 characters.";
         },
       ],
       nameMin: [
@@ -229,6 +233,7 @@ export default {
         contact_number2: "",
         wp_number: "",
         email: "",
+        password: "",
         conference_tags_id: "",
         conference_types_id: "",
         country_id: "",
@@ -237,7 +242,6 @@ export default {
       },
       fetchingState: "",
       fetchingCity: "",
-      data_fetch_user: "",
       data_fetch_conference_tag: "",
       data_fetch_conference_type: "",
       data_fetch_countries: "",
@@ -249,7 +253,6 @@ export default {
     };
   },
   created() {
-    this.fetch_user();
     this.fetch_conference_tag();
     this.fetch_conference_type();
     this.fetch_countries();
@@ -265,18 +268,6 @@ export default {
     },
   },
   methods: {
-    fetch_user() {
-      http
-        .get("/user-side/user-listing")
-        .then((res) => {
-          if (res.data.success) {
-            this.data_fetch_user = res.data.data;
-          }
-        })
-        .catch((e) => {
-          this.$toast.error("Something went wrong");
-        });
-    },
     fetch_conference_tag() {
       http
         .get("/user-side/conference-tag-listing")
