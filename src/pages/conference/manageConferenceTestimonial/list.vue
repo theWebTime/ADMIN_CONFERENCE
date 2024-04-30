@@ -36,7 +36,6 @@
               <th class="text-uppercase text-center">Image</th>
               <th class="text-uppercase text-center">Name</th>
               <th class="text-uppercase text-center">Designation</th>
-              <th class="text-uppercase text-center">Review</th>
               <th class="text-uppercase text-center">Action</th>
             </tr>
           </thead>
@@ -56,9 +55,6 @@
               </td>
               <td class="text-center">
                 {{ item.designation }}
-              </td>
-              <td class="text-center">
-                {{ item.review }}
               </td>
               <td class="text-center">
                 <IconBtn>

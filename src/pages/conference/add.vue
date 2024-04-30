@@ -17,14 +17,15 @@
         <VCardText>
           <VRow>
             <VCol cols="12" md="6">
+              <label>Logo Image</label>
               <v-file-input
                 accept="image/*"
                 v-model="logo"
-                label="Logo Image"
+                :rules="[globalRequire].flat()"
                 ref="file"
               ></v-file-input>
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
                 v-model="insertData.domain"
                 :rules="[globalRequire, nameMin, nameMax].flat()"
@@ -38,11 +39,12 @@
                 label="Title"
               />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppDateTimePicker
                 v-model="insertData.date"
                 :rules="[globalRequire].flat()"
                 label="Date"
+                :config="{ enableTime: true, dateFormat: 'Y-m-d H:i' }"
               />
             </VCol>
             <VCol cols="12" md="6">
@@ -53,9 +55,13 @@
               />
             </VCol>
             <VCol cols="12" md="6">
-              <v-textarea v-model="insertData.iframe" label="Iframe" />
+              <v-textarea
+                v-model="insertData.iframe"
+                :rules="[globalRequire].flat()"
+                label="Iframe"
+              />
             </VCol>
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <AppTextField
                 v-model="insertData.contact_number1"
                 :rules="[globalRequire, numberMin, numberMax].flat()"
@@ -63,7 +69,7 @@
                 label="Phone Number"
               />
             </VCol>
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <AppTextField
                 v-model="insertData.contact_number2"
                 type="number"
@@ -79,14 +85,14 @@
                 label="Whatsapp Number"
               />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
                 v-model="insertData.email"
                 :rules="[email, globalRequire].flat()"
                 label="Email"
               />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
                 type="password"
                 :rules="[passwordMin].flat()"
@@ -94,11 +100,12 @@
                 label="Password"
               />
             </VCol>
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
+              <label>Abstract File Sample</label>
               <v-file-input
                 accept="file/*"
                 v-model="abstract_file_sample"
-                label="Abstract File Sample"
+                :rules="[globalRequire].flat()"
                 ref="file1"
               ></v-file-input>
             </VCol>
@@ -171,10 +178,14 @@
 </template>
 <script>
 import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
+// import Vue from "vue";
+// import DatetimePicker from "vuetify-datetime-picker";
 import http from "../../http-common";
+// Vue.use(DatetimePicker);
 export default {
   components: {
     GlobalBreadCrumbsVue,
+    // DatetimePicker,
   },
   data() {
     return {

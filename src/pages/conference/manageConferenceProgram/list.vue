@@ -34,7 +34,6 @@
             <tr>
               <th class="text-uppercase">ID.</th>
               <th class="text-uppercase text-center">Title</th>
-              <th class="text-uppercase text-center">Description</th>
               <th class="text-uppercase text-center">Action</th>
             </tr>
           </thead>
@@ -46,9 +45,6 @@
               </td>
               <td class="text-center">
                 {{ item.title }}
-              </td>
-              <td class="text-center">
-                {{ item.description }}
               </td>
               <td class="text-center">
                 <IconBtn>

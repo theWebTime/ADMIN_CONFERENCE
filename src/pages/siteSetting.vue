@@ -201,14 +201,28 @@ export default {
             this.insertData.phone_number1 = res.data.data.phone_number1;
             this.insertData.phone_number2 = res.data.data.phone_number2;
             this.insertData.address = res.data.data.address;
-            this.insertData.facebook_link = res.data.data.facebook_link;
-            this.insertData.x_link = res.data.data.x_link;
-            this.insertData.instagram_link = res.data.data.instagram_link;
-            this.insertData.linkedin_link = res.data.data.linkedin_link;
-            this.insertData.youtube_link = res.data.data.youtube_link;
+            this.insertData.facebook_link =
+              res.data.data.facebook_link == null
+                ? ""
+                : res.data.data.facebook_link;
+            this.insertData.x_link =
+              res.data.data.x_link == null ? "" : res.data.data.x_link;
+            this.insertData.instagram_link =
+              res.data.data.instagram_link == null
+                ? ""
+                : res.data.data.instagram_link;
+            this.insertData.linkedin_link =
+              res.data.data.linkedin_link == null
+                ? ""
+                : res.data.data.linkedin_link;
+            this.insertData.youtube_link =
+              res.data.data.youtube_link == null
+                ? ""
+                : res.data.data.youtube_link;
             this.insertData.whatsapp_number = res.data.data.whatsapp_number;
             this.insertData.iframe = res.data.data.iframe;
-            this.insertData.video_link = res.data.data.video_link;
+            this.insertData.video_link =
+              res.data.data.video_link == null ? "" : res.data.data.video_link;
             this.fetch_photo = res.data.data.logo;
           }
           this.loader = false;

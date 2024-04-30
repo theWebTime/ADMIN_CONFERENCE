@@ -75,7 +75,7 @@
                     <VIcon :icon="'tabler-list-details'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Schedule
+                      Manage Conference Schedule
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -87,7 +87,7 @@
                     <VIcon :icon="'tabler-brand-google-photos'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Gallery
+                      Manage Conference Gallery
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -101,7 +101,7 @@
                     <VIcon :icon="'tabler-letter-t-small'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Testimonial
+                      Manage Conference Testimonial
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -115,7 +115,7 @@
                     <VIcon :icon="'tabler-camera'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Testimonial
+                      Manage Conference Media Partner
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -127,7 +127,7 @@
                     <VIcon :icon="'tabler-progress'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Program
+                      Manage Conference Program
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -139,7 +139,7 @@
                     <VIcon :icon="'tabler-speakerphone'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Speaker
+                      Manage Conference Speaker
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -154,7 +154,7 @@
                     <VIcon :icon="'tabler-users-group'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Committee Member
+                      Manage Conference Committee Member
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -168,7 +168,7 @@
                     <VIcon :icon="'tabler-calendar'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Important Date
+                      Manage Conference Important Date
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -180,7 +180,7 @@
                     <VIcon :icon="'tabler-question-mark'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference FAQ
+                      Manage Conference FAQ
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -192,7 +192,7 @@
                     <VIcon :icon="'tabler-info-circle'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Other Information
+                      Manage Conference Other Information
                     </VTooltip>
                   </IconBtn>
                 </router-link>
@@ -204,7 +204,7 @@
                     <VIcon :icon="'tabler-timeline'" />
 
                     <VTooltip activator="parent" location="start">
-                      Edit Conference Plan
+                      Manage Conference Plan
                     </VTooltip>
                   </IconBtn>
                 </router-link>

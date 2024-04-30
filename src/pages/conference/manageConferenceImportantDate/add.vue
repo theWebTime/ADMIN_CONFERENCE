@@ -16,7 +16,7 @@
       <VForm ref="formSubmit">
         <VCardText>
           <VRow>
-            <VCol cols="12" md="6">
+            <!-- <VCol cols="12" md="6">
               <VRadioGroup
                 v-model="insertData.category"
                 inline
@@ -34,6 +34,14 @@
                   density="compact"
                 />
               </VRadioGroup>
+            </VCol> -->
+            <VCol cols="12" md="6">
+              <AppSelect
+                v-model="insertData.category"
+                :items="data_of_category"
+                label="Category"
+                :rules="[globalRequire].flat()"
+              />
             </VCol>
             <VCol cols="12" md="6">
               <AppTextField
@@ -42,11 +50,12 @@
                 label="Title"
               />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppDateTimePicker
                 v-model="insertData.date"
                 :rules="[globalRequire].flat()"
                 label="Date"
+                :config="{ enableTime: true, dateFormat: 'Y-m-d H:i' }"
               />
             </VCol>
           </VRow>
@@ -76,6 +85,11 @@ export default {
   },
   data() {
     return {
+      data_of_category: [
+        { value: "1", title: "Conference Dates" },
+        { value: "2", title: "Abstract Deadline" },
+        { value: "3", title: "Registration Deadline" },
+      ],
       globalRequire: [
         (value) => {
           if (value) return true;

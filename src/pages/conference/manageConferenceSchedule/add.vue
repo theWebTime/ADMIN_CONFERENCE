@@ -17,12 +17,11 @@
         <VCardText>
           <VRow>
             <VCol cols="12" md="6">
+              <label>Image</label>
               <v-file-input
                 accept="image/*"
-                v-model="files"
-                label="Image"
+                v-model="data"
                 ref="file"
-                multiple
                 :rules="[globalRequire].flat()"
               ></v-file-input>
             </VCol>
@@ -72,8 +71,7 @@ export default {
           return "Must be at least 3 characters.";
         },
       ],
-      files: {},
-      //   date: "",
+      data: "",
       insertData: {
         date: "",
       },
@@ -88,9 +86,14 @@ export default {
       const checkValidation = await this.$refs.formSubmit.validate();
       if (checkValidation.valid) {
         const formData = new FormData();
-        for (var i = 0; i < this.$refs.file.files.length; i++) {
-          let file = this.$refs.file.files[i];
-          formData.append("files[" + i + "]", file);
+        if (this.data) {
+          const imageData = this.$refs.file.files[0];
+          formData.append("data", imageData);
+        } else {
+          formData.append("data", "");
+        }
+        for (let x in this.insertData) {
+          formData.append(x, this.insertData[x]);
         }
         formData.append("conference_id", this.conference_id);
         formData.append("date", this.insertData.date);

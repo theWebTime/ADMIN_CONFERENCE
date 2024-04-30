@@ -17,39 +17,38 @@
         <VCardText>
           <VRow>
             <VCol cols="12" md="6">
+              <label>Image</label>
               <v-file-input
                 accept="image/*"
-                v-model="files"
-                label="Image"
+                v-model="image"
                 ref="file"
-                multiple
                 :rules="[globalRequire].flat()"
               ></v-file-input>
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
                 :rules="[globalRequire, nameMin, nameMax].flat()"
                 v-model="insertData.name"
                 label="Name"
               />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
                 :rules="[globalRequire, nameMin, nameMax].flat()"
                 v-model="insertData.designation"
                 label="Designation"
               />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
                 v-model="insertData.facebook_link"
                 label="Facebook Link"
               />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField v-model="insertData.x_link" label="Twitter Link" />
             </VCol>
-            <VCol cols="12" md="4">
+            <VCol cols="12" md="6">
               <AppTextField
                 v-model="insertData.linkedin_link"
                 label="LinkedIn Link"
@@ -100,7 +99,7 @@ export default {
           return "Must be at least 3 characters.";
         },
       ],
-      files: {},
+      image: "",
       insertData: {
         name: "",
         designation: "",
@@ -116,38 +115,45 @@ export default {
   },
   methods: {
     async saveData() {
-      const formData = new FormData();
-      for (var i = 0; i < this.$refs.file.files.length; i++) {
-        let file = this.$refs.file.files[i];
-        formData.append("files[" + i + "]", file);
+      const checkValidation = await this.$refs.formSubmit.validate();
+      if (checkValidation.valid) {
+        const formData = new FormData();
+        if (this.image) {
+          const imageData = this.$refs.file.files[0];
+          formData.append("image", imageData);
+        } else {
+          formData.append("image", "");
+        }
+        for (let x in this.insertData) {
+          formData.append(x, this.insertData[x]);
+        }
+        formData.append("conference_id", this.conference_id);
+        formData.append("name", this.insertData.name);
+        formData.append("designation", this.insertData.designation);
+        formData.append("facebook_link", this.insertData.facebook_link);
+        formData.append("x_link", this.insertData.x_link);
+        formData.append("linkedin_link", this.insertData.linkedin_link);
+        this.loader = true;
+        http
+          .post("conference-speaker/store", formData)
+          .then((res) => {
+            if (res.data.success) {
+              this.$router.push({
+                path: "/conference/list/",
+              });
+              this.$toast.success(res.data.message);
+              this.isAlertVisible = false;
+            } else {
+              this.$toast.error(res.data.message);
+              this.errors = res.data.data;
+              this.isAlertVisible = true;
+            }
+            this.loader = false;
+          })
+          .catch((e) => {
+            this.loader = false;
+          });
       }
-      formData.append("conference_id", this.conference_id);
-      formData.append("name", this.insertData.name);
-      formData.append("designation", this.insertData.designation);
-      formData.append("facebook_link", this.insertData.facebook_link);
-      formData.append("x_link", this.insertData.x_link);
-      formData.append("linkedin_link", this.insertData.linkedin_link);
-
-      this.loader = true;
-      http
-        .post("conference-speaker/store", formData)
-        .then((res) => {
-          if (res.data.success) {
-            this.$router.push({
-              path: "/conference/list/",
-            });
-            this.$toast.success(res.data.message);
-            this.isAlertVisible = false;
-          } else {
-            this.$toast.error(res.data.message);
-            this.errors = res.data.data;
-            this.isAlertVisible = true;
-          }
-          this.loader = false;
-        })
-        .catch((e) => {
-          this.loader = false;
-        });
     },
   },
 };

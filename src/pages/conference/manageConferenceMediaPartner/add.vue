@@ -17,10 +17,10 @@
         <VCardText>
           <VRow>
             <VCol cols="12" md="6">
+              <label>Image</label>
               <v-file-input
                 accept="image/*"
                 v-model="files"
-                label="Image"
                 ref="file"
                 multiple
                 :rules="[globalRequire].flat()"

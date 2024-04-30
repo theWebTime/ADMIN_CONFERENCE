@@ -18,10 +18,11 @@
         <VCardText>
           <VRow>
             <VCol cols="12" md="6">
+              <label>Logo Image</label>
               <v-file-input
                 accept="image/*"
                 v-model="logo"
-                label="Logo Image"
+                :rules="[globalRequire].flat()"
                 ref="file"
               ></v-file-input>
             </VCol>
@@ -37,7 +38,7 @@
                 label="Domain"
               />
             </VCol>
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <AppTextField
                 :rules="[globalRequire, nameMin, nameMax].flat()"
                 v-model="insertData.title"
@@ -49,6 +50,7 @@
                 v-model="insertData.date"
                 :rules="[globalRequire].flat()"
                 label="Date"
+                :config="{ enableTime: true, dateFormat: 'Y-m-d H:i' }"
               />
             </VCol>
             <VCol cols="12" md="6">
@@ -59,9 +61,13 @@
               />
             </VCol>
             <VCol cols="12" md="6">
-              <v-textarea v-model="insertData.iframe" label="Iframe" />
+              <v-textarea
+                v-model="insertData.iframe"
+                :rules="[globalRequire].flat()"
+                label="Iframe"
+              />
             </VCol>
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <AppTextField
                 v-model="insertData.contact_number1"
                 :rules="[globalRequire, numberMin, numberMax].flat()"
@@ -69,7 +75,7 @@
                 label="Phone Number"
               />
             </VCol>
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <AppTextField
                 v-model="insertData.contact_number2"
                 type="number"
@@ -85,18 +91,12 @@
                 label="Whatsapp Number"
               />
             </VCol>
-            <VCol cols="12" md="4">
-              <AppTextField
-                v-model="insertData.email"
-                :rules="[email, globalRequire].flat()"
-                label="Email"
-              />
-            </VCol>
             <VCol cols="12" md="6">
+              <label>Abstract File Sample</label>
               <v-file-input
                 accept="file/*"
                 v-model="abstract_file_sample"
-                label="Abstract File Sample"
+                :rules="[globalRequire].flat()"
                 ref="file1"
               ></v-file-input>
             </VCol>
@@ -104,6 +104,13 @@
               <VAvatar size="48">
                 <VImg :src="fetch_file" />
               </VAvatar>
+            </VCol>
+            <VCol cols="12" md="4">
+              <AppTextField
+                v-model="insertData.email"
+                :rules="[email, globalRequire].flat()"
+                label="Email"
+              />
             </VCol>
             <VCol cols="12" md="4">
               <AppSelect
