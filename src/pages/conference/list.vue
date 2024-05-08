@@ -29,7 +29,7 @@
               @keyup="fetchData()"
             />
           </div>
-          <router-link to="/conference/add">
+          <router-link to="/conference/add" v-if="userData.role == 1">
             <VBtn prepend-icon="tabler-plus"> Add Conference </VBtn>
           </router-link>
         </div>
@@ -250,6 +250,7 @@ import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
 import { VDataTable } from "vuetify/labs/VDataTable";
 import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import http from "../../http-common";
+import ls from "localstorage-slim";
 export default {
   components: {
     GlobalBreadCrumbsVue,
@@ -258,6 +259,7 @@ export default {
   },
   data() {
     return {
+      userData: ls.get("user-info", { decrypt: true }),
       globalRequire: [
         (value) => {
           if (value) return true;

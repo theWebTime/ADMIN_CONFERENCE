@@ -14,61 +14,68 @@ var route = [
   },
 ];
 
-const manageConferenceTag = {
-  title: "Conference Tag",
-  to: null,
-  icon: { icon: "tabler-user" },
-  children: [
-    {
-      title: "Add",
-      to: { name: "conferenceTag-add" },
-    },
-    {
-      title: "List",
-      to: { name: "conferenceTag-list" },
-    },
-  ],
-};
-
-route.push(manageConferenceTag);
-
-const manageConferenceType = {
-  title: "Conference Type",
-  to: null,
-  icon: { icon: "tabler-user" },
-  children: [
-    {
-      title: "Add",
-      to: { name: "conferenceType-add" },
-    },
-    {
-      title: "List",
-      to: { name: "conferenceType-list" },
-    },
-  ],
-};
-
-route.push(manageConferenceType);
-
-const manageConference = {
-  title: "Conference",
-  to: null,
-  icon: { icon: "tabler-user" },
-  children: [
-    {
-      title: "Add",
-      to: { name: "conference-add" },
-    },
-    {
-      title: "List",
-      to: { name: "conference-list" },
-    },
-  ],
-};
+if (auth.role == 1) {
+  var manageConference = {
+    title: "Conference",
+    to: null,
+    icon: { icon: "tabler-user" },
+    children: [
+      {
+        title: "Add",
+        to: { name: "conference-add" },
+      },
+      {
+        title: "List",
+        to: { name: "conference-list" },
+      },
+    ],
+  };
+} else {
+  var manageConference = {
+    title: "Manage Conference",
+    to: { name: "conference-list" },
+    icon: { icon: "tabler-smart-home" },
+  };
+}
 
 route.push(manageConference);
 
 if (auth.role == 1) {
+  const manageConferenceTag = {
+    title: "Conference Tag",
+    to: null,
+    icon: { icon: "tabler-user" },
+    children: [
+      {
+        title: "Add",
+        to: { name: "conferenceTag-add" },
+      },
+      {
+        title: "List",
+        to: { name: "conferenceTag-list" },
+      },
+    ],
+  };
+
+  route.push(manageConferenceTag);
+
+  const manageConferenceType = {
+    title: "Conference Type",
+    to: null,
+    icon: { icon: "tabler-user" },
+    children: [
+      {
+        title: "Add",
+        to: { name: "conferenceType-add" },
+      },
+      {
+        title: "List",
+        to: { name: "conferenceType-list" },
+      },
+    ],
+  };
+
+  route.push(manageConferenceType);
   const manageSiteSetting = {
     title: "Site Setting",
     to: { name: "siteSetting" },

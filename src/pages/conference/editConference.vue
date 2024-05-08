@@ -22,7 +22,6 @@
               <v-file-input
                 accept="image/*"
                 v-model="logo"
-                :rules="[globalRequire].flat()"
                 ref="file"
               ></v-file-input>
             </VCol>
@@ -96,7 +95,6 @@
               <v-file-input
                 accept="file/*"
                 v-model="abstract_file_sample"
-                :rules="[globalRequire].flat()"
                 ref="file1"
               ></v-file-input>
             </VCol>
@@ -410,7 +408,6 @@ export default {
           .post("conference/update", formData)
           .then((res) => {
             if (res.data.success) {
-              this.fetchData();
               this.$toast.success(res.data.message);
               this.$router.push({
                 path: "/conference/list/",
