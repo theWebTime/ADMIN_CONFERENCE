@@ -40,6 +40,30 @@ if (auth.role == 1) {
 
 route.push(manageConference);
 
+const manageContactUs = {
+  title: "Contact Us",
+  to: { name: "contactUs" },
+  icon: { icon: "tabler-smart-home" },
+};
+
+route.push(manageContactUs);
+
+const manageSubmitAbstract = {
+  title: "Submit Abstract",
+  to: { name: "submitAbstract" },
+  icon: { icon: "tabler-smart-home" },
+};
+
+route.push(manageSubmitAbstract);
+
+const manageRegister = {
+  title: "Register",
+  to: { name: "register" },
+  icon: { icon: "tabler-smart-home" },
+};
+
+route.push(manageRegister);
+
 if (auth.role == 1) {
   const manageConferenceTag = {
     title: "Conference Tag",
