@@ -40,9 +40,17 @@ if (auth.role == 1) {
 
 route.push(manageConference);
 
+const manageUserContactUs = {
+  title: "User Contact Us",
+  to: { name: "userContactUs" },
+  icon: { icon: "tabler-smart-home" },
+};
+
+route.push(manageUserContactUs);
+
 const manageContactUs = {
-  title: "Contact Us",
-  to: { name: "contactUs" },
+  title: "Domain Contact Us",
+  to: { name: "domainContactUs" },
   icon: { icon: "tabler-smart-home" },
 };
 
