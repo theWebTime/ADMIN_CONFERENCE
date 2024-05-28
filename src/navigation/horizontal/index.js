@@ -112,6 +112,13 @@ if (auth.role == 1) {
   };
   route.push(manageSiteSetting);
 
+  const manageAboutUs = {
+    title: "About Us",
+    to: { name: "aboutUs" },
+    icon: { icon: "tabler-info-circle" },
+  };
+  route.push(manageAboutUs);
+
   const manageUser = {
     title: "User",
     to: null,
@@ -124,6 +131,23 @@ if (auth.role == 1) {
     ],
   };
   route.push(manageUser);
+
+  const manageGallery = {
+    title: "Gallery",
+    to: null,
+    icon: { icon: "tabler-photo" },
+    children: [
+      {
+        title: "Add",
+        to: { name: "gallery-add" },
+      },
+      {
+        title: "List",
+        to: { name: "gallery-list" },
+      },
+    ],
+  };
+  route.push(manageGallery);
 }
 
 export default route;
