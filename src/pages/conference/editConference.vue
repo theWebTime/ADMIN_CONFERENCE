@@ -32,6 +32,13 @@
             </VCol>
             <VCol cols="12" md="4">
               <AppTextField
+                :rules="[globalRequire, nameMin, nameMax].flat()"
+                v-model="insertData.title"
+                label="Title"
+              />
+            </VCol>
+            <VCol cols="12" md="6">
+              <AppTextField
                 v-model="insertData.domain"
                 :rules="[globalRequire, nameMin, nameMax].flat()"
                 label="Domain"
@@ -39,9 +46,16 @@
             </VCol>
             <VCol cols="12" md="4">
               <AppTextField
-                :rules="[globalRequire, nameMin, nameMax].flat()"
-                v-model="insertData.title"
-                label="Title"
+                v-model="insertData.primary_color"
+                :rules="[globalRequire].flat()"
+                label="Primary Color"
+              />
+            </VCol>
+            <VCol cols="12" md="4">
+              <AppTextField
+                v-model="insertData.secondary_color"
+                :rules="[globalRequire].flat()"
+                label="Secondary Color"
               />
             </VCol>
             <VCol cols="12" md="4">
@@ -232,6 +246,8 @@ export default {
       fetch_file: "",
       insertData: {
         user_id: "",
+        primary_color: "",
+        secondary_color: "",
         domain: "",
         title: "",
         date: "",
@@ -356,6 +372,8 @@ export default {
           if (res.data.success) {
             const resData = res.data.data;
             this.insertData.user_id = resData.user_id;
+            this.insertData.primary_color = resData.primary_color;
+            this.insertData.secondary_color = resData.secondary_color;
             this.insertData.domain = resData.domain;
             this.insertData.title = resData.title;
             this.insertData.date = resData.date;

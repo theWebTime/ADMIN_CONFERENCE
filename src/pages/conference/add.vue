@@ -27,16 +27,16 @@
             </VCol>
             <VCol cols="12" md="6">
               <AppTextField
-                v-model="insertData.domain"
                 :rules="[globalRequire, nameMin, nameMax].flat()"
-                label="Domain"
+                v-model="insertData.title"
+                label="Title"
               />
             </VCol>
             <VCol cols="12" md="6">
               <AppTextField
+                v-model="insertData.domain"
                 :rules="[globalRequire, nameMin, nameMax].flat()"
-                v-model="insertData.title"
-                label="Title"
+                label="Domain"
               />
             </VCol>
             <VCol cols="12" md="6">
@@ -45,6 +45,20 @@
                 :rules="[globalRequire].flat()"
                 label="Date"
                 :config="{ enableTime: true, dateFormat: 'Y-m-d H:i' }"
+              />
+            </VCol>
+            <VCol cols="12" md="6">
+              <AppTextField
+                v-model="insertData.primary_color"
+                :rules="[globalRequire].flat()"
+                label="Primary Color"
+              />
+            </VCol>
+            <VCol cols="12" md="6">
+              <AppTextField
+                v-model="insertData.secondary_color"
+                :rules="[globalRequire].flat()"
+                label="Secondary Color"
               />
             </VCol>
             <VCol cols="12" md="6">
@@ -235,6 +249,8 @@ export default {
       logo: "",
       insertData: {
         user_id: "",
+        primary_color: "",
+        secondary_color: "",
         domain: "",
         title: "",
         date: "",
