@@ -69,6 +69,18 @@
                 </router-link>
                 |
                 <router-link
+                  :to="'/conference/manageConferenceAboutUs/' + item.id"
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-file-description'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Manage Conference About Us
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
+                <router-link
                   :to="'/conference/manageConferenceSchedule/list/' + item.id"
                 >
                   <IconBtn>
@@ -247,10 +259,10 @@
 </template>
 <script>
 import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
+import ls from "localstorage-slim";
 import { VDataTable } from "vuetify/labs/VDataTable";
 import { VSkeletonLoader } from "vuetify/labs/VSkeletonLoader";
 import http from "../../http-common";
-import ls from "localstorage-slim";
 export default {
   components: {
     GlobalBreadCrumbsVue,

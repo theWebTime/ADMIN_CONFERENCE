@@ -108,8 +108,8 @@ export default {
         name: "",
         designation: "",
         review: "",
-        conference_id: this.$route.params.id,
       },
+      conference_id: this.$route.params.id,
       loader: false,
       errors: {},
       isAlertVisible: false,
@@ -130,9 +130,6 @@ export default {
           formData.append(x, this.insertData[x]);
         }
         formData.append("conference_id", this.conference_id);
-        formData.append("name", this.insertData.name);
-        formData.append("designation", this.insertData.designation);
-        formData.append("review", this.insertData.review);
         this.loader = true;
         http
           .post("conference-testimonial/store", formData)

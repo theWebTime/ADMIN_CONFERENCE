@@ -28,11 +28,7 @@
                 ref="file"
               ></v-file-input>
             </VCol>
-            <VCol cols="12" md="6">
-              <VAvatar size="48">
-                <VImg :src="fetch_photo" />
-              </VAvatar>
-            </VCol>
+            <VCol cols="12" md="6"> {{ this.fetch_file }} </VCol>
             <VCol cols="12" md="6">
               <v-textarea
                 :rules="[globalRequire].flat()"
@@ -110,7 +106,8 @@ export default {
             this.insertData.venue_description = res.data.data.venue_description;
             this.insertData.guidelines_description =
               res.data.data.guidelines_description;
-            this.fetch_file = resData.brochure == null ? "" : resData.brochure;
+            this.fetch_file =
+              res.data.data.brochures == null ? "" : res.data.data.brochures;
           }
           this.loader = false;
         })
