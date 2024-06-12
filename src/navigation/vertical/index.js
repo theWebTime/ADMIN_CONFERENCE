@@ -72,6 +72,14 @@ const manageRegister = {
 
 route.push(manageRegister);
 
+const managePayment = {
+  title: "Payment",
+  to: { name: "payment" },
+  icon: { icon: "tabler-smart-home" },
+};
+
+route.push(managePayment);
+
 if (auth.role == 1) {
   const manageConferenceTag = {
     title: "Conference Tag",

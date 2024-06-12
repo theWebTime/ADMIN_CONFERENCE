@@ -99,14 +99,14 @@
                 label="Whatsapp Number"
               />
             </VCol>
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <AppTextField
                 v-model="insertData.email"
                 :rules="[email, globalRequire].flat()"
                 label="Email"
               />
             </VCol>
-            <VCol cols="12" md="6">
+            <VCol cols="12" md="4">
               <AppTextField
                 type="password"
                 :rules="[passwordMin].flat()"
@@ -121,6 +121,15 @@
                 v-model="abstract_file_sample"
                 :rules="[globalRequire].flat()"
                 ref="file1"
+              ></v-file-input>
+            </VCol>
+            <VCol cols="12" md="4">
+              <label>Conference Brochure</label>
+              <v-file-input
+                accept="file/*"
+                v-model="brochure"
+                :rules="[globalRequire].flat()"
+                ref="file2"
               ></v-file-input>
             </VCol>
             <VCol cols="12" md="4">
@@ -246,6 +255,7 @@ export default {
         },
       ],
       abstract_file_sample: "",
+      brochure: "",
       logo: "",
       insertData: {
         user_id: "",
@@ -365,14 +375,17 @@ export default {
         } else {
           formData.append("logo", "");
         }
-        for (let x in this.insertData) {
-          formData.append(x, this.insertData[x]);
-        }
         if (this.abstract_file_sample) {
           const imageData1 = this.$refs.file1.files[0];
           formData.append("abstract_file_sample", imageData1);
         } else {
           formData.append("abstract_file_sample", "");
+        }
+        if (this.brochure) {
+          const imageData1 = this.$refs.file2.files[0];
+          formData.append("brochure", imageData1);
+        } else {
+          formData.append("brochure", "");
         }
         for (let x in this.insertData) {
           formData.append(x, this.insertData[x]);
