@@ -40,11 +40,14 @@
                 label="Title"
               />
             </VCol>
-            <VCol cols="12" md="6">
-              <v-textarea
-                v-model="insertData.description"
-                :rules="[globalRequire, nameMin].flat()"
+            <VCol cols="12" md="6" class="editor-layout">
+              <label>Description</label>
+              <QuillEditor
+                theme="snow"
+                v-model:content="insertData.description"
+                contentType="html"
                 label="Description"
+                :options="options"
               />
             </VCol>
             <VCol cols="12" md="6">
@@ -76,9 +79,11 @@
   
   <script>
   import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
-  import http from "../../http-common";
+import { QuillEditor } from "@vueup/vue-quill";
+import http from "../../http-common";
   export default {
     components: {
+      QuillEditor,
       GlobalBreadCrumbsVue,
     },
     data() {
@@ -89,6 +94,9 @@
             return "Required.";
           },
         ],
+        options: {
+        placeholder: "Enter text",
+      },
         image: "",
       fetch_photo: "",
       insertData: {
@@ -166,4 +174,9 @@
     },
   };
   </script>
-  
+  <style scoped>
+  .editor-layout {
+    width: 100%;
+    height: 100%;
+  }
+  </style>

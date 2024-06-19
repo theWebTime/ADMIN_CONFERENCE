@@ -33,7 +33,7 @@
           <thead>
             <tr>
               <th class="text-uppercase">ID.</th>
-              <th class="text-uppercase text-center">Image</th>
+              <th class="text-uppercase text-center">Title</th>
               <th class="text-uppercase text-center">date</th>
               <th class="text-uppercase text-center">Action</th>
             </tr>
@@ -45,14 +45,24 @@
                 {{ (data.current_page - 1) * data.per_page + index + 1 }}
               </td>
               <td class="text-center">
-                <VAvatar size="48">
-                  <VImg :src="item.data" />
-                </VAvatar>
+                {{ item.title }}
               </td>
               <td class="text-center">
                 {{ item.date }}
               </td>
               <td class="text-center">
+                <router-link
+                  :to="'/conference/manageConferenceSchedule/editManageConferenceSchedule/' + item.id"
+                >
+                  <IconBtn>
+                    <VIcon :icon="'tabler-edit-circle'" />
+
+                    <VTooltip activator="parent" location="start">
+                      Edit Data
+                    </VTooltip>
+                  </IconBtn>
+                </router-link>
+                |
                 <IconBtn>
                   <VIcon
                     class="text-primary"

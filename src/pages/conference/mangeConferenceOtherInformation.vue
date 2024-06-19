@@ -29,18 +29,22 @@
               ></v-file-input>
             </VCol>
             <VCol cols="12" md="6"> {{ this.fetch_file }} </VCol>
-            <VCol cols="12" md="6">
-              <v-textarea
-                :rules="[globalRequire].flat()"
-                v-model="insertData.venue_description"
-                label="Venue Description"
+            <VCol cols="12" md="6" class="editor-layout">
+              <label>Venue Description</label>
+              <QuillEditor
+                theme="snow"
+                v-model:content="insertData.venue_description"
+                contentType="html"
+                :options="options"
               />
             </VCol>
-            <VCol cols="12" md="6">
-              <v-textarea
-                v-model="insertData.guidelines_description"
-                :rules="[globalRequire].flat()"
-                label="Guideline Description"
+            <VCol cols="12" md="6" class="editor-layout">
+              <label>Guideline Description</label>
+              <QuillEditor
+                theme="snow"
+                v-model:content="insertData.guidelines_description"
+                contentType="html"
+                :options="options"
               />
             </VCol>
           </VRow>
@@ -64,9 +68,11 @@
 
 <script>
 import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
+import { QuillEditor } from "@vueup/vue-quill";
 import http from "../../http-common";
 export default {
   components: {
+    QuillEditor,
     GlobalBreadCrumbsVue,
   },
   data() {
@@ -77,6 +83,9 @@ export default {
           return "Required.";
         },
       ],
+      options: {
+        placeholder: "Enter text",
+      },
       brochures: "",
       fetch_file: "",
       insertData: {
@@ -152,3 +161,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.editor-layout {
+  width: 100%;
+  height: 100%;
+}
+</style>

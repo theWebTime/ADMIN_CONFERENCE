@@ -23,11 +23,14 @@
                 label="Title"
               />
             </VCol>
-            <VCol cols="12" md="6">
-              <v-textarea
-                v-model="insertData.description"
-                :rules="[globalRequire].flat()"
+            <VCol cols="12" md="6" class="editor-layout">
+              <label>Description</label>
+              <QuillEditor
+                theme="snow"
+                v-model:content="insertData.description"
+                contentType="html"
                 label="Description"
+                :options="options"
               />
             </VCol>
           </VRow>
@@ -50,9 +53,11 @@
 </template>
 <script>
 import GlobalBreadCrumbsVue from "@/components/common/GlobalBreadCrumbs.vue";
+import { QuillEditor } from "@vueup/vue-quill";
 import http from "../../../http-common";
 export default {
   components: {
+    QuillEditor,
     GlobalBreadCrumbsVue,
   },
   data() {
@@ -75,6 +80,9 @@ export default {
           return "Must be at least 3 characters.";
         },
       ],
+      options: {
+        placeholder: "Enter text",
+      },
       insertData: {
         title: "",
         description: "",
@@ -115,3 +123,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+.editor-layout {
+  width: 100%;
+  height: 100%;
+}
+</style>
